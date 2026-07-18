@@ -120,12 +120,12 @@ This project is set up to deploy straight to Vercel:
      https://yourfarm.vercel.app) reachable from any phone or
      computer with internet, anywhere.
 
-  NOTE ON DATA: this deploy uses SQLite for now, stored in Vercel's
-  /tmp folder. That's fine for testing and demos, but /tmp doesn't
-  persist reliably between deploys/cold starts, so don't rely on it
-  for real farm records long-term - ask to switch to a proper hosted
-  Postgres database (e.g. Neon, Vercel Postgres) when you're ready to
-  go live with real data.
+  DATABASE: this project is connected to a real Neon Postgres database
+  through the Vercel Marketplace (Storage tab), set as the DATABASE_URL
+  environment variable. Real farm data is safe to enter - it's not
+  stored in a temporary folder, it persists in Postgres across deploys
+  and restarts. (If DATABASE_URL isn't set - e.g. running locally - the
+  app quietly falls back to a local SQLite file for convenience.)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   PUSHING TO GITHUB
