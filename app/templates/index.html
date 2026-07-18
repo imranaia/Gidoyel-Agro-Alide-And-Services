@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Gidoyel Agro Alide And Services</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMzIiIGZpbGw9IiMxNmEzNGEiLz48dGV4dCB4PSIzMiIgeT0iNDUiIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZiIgZmlsbD0iI2ZmZmZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RzwvdGV4dD48L3N2Zz4=">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --pr:#16a34a;--prd:#166534;--prl:#f0fdf4;
+  --sc:#1a56db;--scl:#eff6ff;
+  --dn:#dc2626;--dnl:#fef2f2;
+  --wn:#d97706;--wnl:#fffbeb;
+  --sb:#0f172a;--sbw:245px;--hh:54px;
+  --r:8px;--rl:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f1f5f9;color:#1e293b;font-size:14px;min-height:100vh}
+
+/* AUTH */
+#auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#166534);padding:1rem}
+.auth-card{background:#fff;border-radius:16px;padding:2rem;width:100%;max-width:400px;box-shadow:0 25px 60px rgba(0,0,0,.3)}
+.auth-logo{text-align:center;margin-bottom:.6rem}
+.auth-card h1{font-size:1.05rem;text-align:center;font-weight:800;color:#0f172a;line-height:1.3}
+.auth-card .sub{text-align:center;font-size:.75rem;color:#64748b;margin-bottom:1.1rem}
+.brand-badge{width:56px;height:56px}
+.sb-badge{width:34px;height:34px;flex-shrink:0}
+
+/* APP SHELL */
+#app{display:none}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:150}
+.overlay.on{display:block}
+.sidebar{width:var(--sbw);background:var(--sb);position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;z-index:200;overflow-y:auto;transition:transform .25s}
+.sb-brand{padding:1rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
+.sb-title{font-size:.72rem;font-weight:800;color:#fff;line-height:1.45;letter-spacing:.01em}
+.sb-sub{font-size:.62rem;color:#94a3b8;margin-top:.15rem}
+.nav-sec{padding:.6rem 1rem .18rem;font-size:.58rem;font-weight:700;color:#475569;letter-spacing:.1em;text-transform:uppercase}
+.nav-it{display:flex;align-items:center;gap:.6rem;padding:.5rem 1rem;color:#94a3b8;cursor:pointer;font-size:.8rem;transition:.12s;border-left:3px solid transparent;user-select:none;white-space:nowrap}
+.nav-it:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-it.on{color:#fff;background:rgba(22,163,74,.3);border-left-color:var(--pr)}
+.nav-it i{width:15px;text-align:center;font-size:.83rem;flex-shrink:0}
+.sb-foot{padding:.875rem 1rem;border-top:1px solid rgba(255,255,255,.07);margin-top:auto;flex-shrink:0}
+.av{width:32px;height:32px;border-radius:50%;background:var(--pr);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.73rem;color:#fff;flex-shrink:0}
+
+/* MAIN */
+.main{margin-left:var(--sbw);display:flex;flex-direction:column;min-height:100vh}
+.topbar{height:var(--hh);background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;position:sticky;top:0;z-index:100}
+.ham{display:none;background:none;border:none;font-size:1.2rem;color:#64748b;cursor:pointer;padding:.2rem;margin-right:.5rem}
+.pg-title{font-size:.95rem;font-weight:700;color:#0f172a}
+.pg-body{padding:1rem;flex:1}
+.page{display:none}.page.on{display:block}
+
+/* STAT CARDS */
+.scard{background:#fff;border-radius:var(--rl);padding:.875rem 1rem;border:1px solid #e2e8f0;height:100%;transition:box-shadow .15s,transform .15s,border-color .15s}
+.scard-link{cursor:pointer}
+.scard-link:hover{box-shadow:0 4px 14px rgba(0,0,0,.08);transform:translateY(-2px);border-color:#cbd5e1}
+.scard-link:active{transform:translateY(0);box-shadow:none}
+.sicon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;margin-bottom:.5rem}
+.ib{background:#eff6ff;color:var(--sc)}.ig{background:#f0fdf4;color:var(--pr)}
+.ir{background:#fef2f2;color:var(--dn)}.iy{background:#fefce8;color:#ca8a04}
+.ip{background:#faf5ff;color:#9333ea}.io{background:#fff7ed;color:#ea580c}
+.slabel{font-size:.62rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.2rem}
+.sval{font-size:1.25rem;font-weight:700;color:#0f172a;line-height:1}
+.ssub{font-size:.67rem;color:#94a3b8;margin-top:.2rem}
+
+/* CARDS */
+.card{border:1px solid #e2e8f0;border-radius:var(--rl);box-shadow:none}
+.card-header{background:#fff;border-bottom:1px solid #f1f5f9;padding:.72rem 1rem;font-weight:700;font-size:.84rem}
+
+/* ALERTS */
+.alertbox{border-radius:10px;padding:.6rem .8rem;font-size:.78rem;margin-bottom:.5rem;display:flex;gap:.5rem;align-items:flex-start}
+.al-warning{background:var(--wnl);color:#92400e;border:1px solid #fde68a}
+.al-danger{background:var(--dnl);color:#991b1b;border:1px solid #fecaca}
+.al-info{background:var(--scl);color:#1e429f;border:1px solid #bfdbfe}
+
+/* BADGES */
+.b{display:inline-flex;align-items:center;padding:.16rem .48rem;border-radius:9999px;font-size:.64rem;font-weight:600;white-space:nowrap}
+.b-green{background:#dcfce7;color:#166534}
+.b-amber{background:#fef9c3;color:#854d0e}
+.b-red{background:#fee2e2;color:#991b1b}
+.b-blue{background:#eff6ff;color:#1e429f}
+.b-gray{background:#f1f5f9;color:#475569}
+
+/* TABLES */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl th{font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;color:#64748b;background:#f8fafc;padding:.48rem .75rem;white-space:nowrap;font-weight:700;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:2}
+.tbl td{padding:.52rem .75rem;font-size:.79rem;border-bottom:1px solid #f1f5f9;vertical-align:middle;white-space:nowrap}
+.tbl tr:hover td{background:#f8fafc}
+.tbl tr.clk{cursor:pointer}
+
+/* FORMS */
+.form-label{font-size:.74rem;font-weight:600;color:#374151;margin-bottom:.24rem}
+.form-control,.form-select{font-size:.82rem;border:1.5px solid #e2e8f0;border-radius:8px;padding:.44rem .68rem}
+.form-control:focus,.form-select:focus{border-color:var(--pr);box-shadow:0 0 0 3px rgba(22,163,74,.1);outline:none}
+
+/* BATCH CARDS */
+.bcard{background:#fff;border:1.5px solid #e2e8f0;border-radius:var(--rl);padding:.9rem;transition:.12s;cursor:pointer;height:100%}
+.bcard:hover{border-color:#86efac;box-shadow:0 2px 12px rgba(22,163,74,.08)}
+.bcard .bc-name{font-size:.88rem;font-weight:700;color:#0f172a;margin-bottom:.3rem}
+.bcard .bc-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.3rem;margin-top:.5rem;padding-top:.5rem;border-top:1px solid #f1f5f9}
+.pm-lbl{font-size:.58rem;color:#94a3b8;font-weight:600;text-transform:uppercase}
+.pm-val{font-size:.8rem;font-weight:700}
+
+.btn-pr{background:var(--pr);border-color:var(--pr);color:#fff}
+.btn-pr:hover{background:var(--prd);border-color:var(--prd);color:#fff}
+.tab-pill{display:flex;gap:.3rem;background:#f1f5f9;padding:.25rem;border-radius:8px;margin-bottom:.9rem;flex-wrap:wrap}
+.tab-pill button{border:none;background:none;padding:.4rem .8rem;border-radius:6px;font-size:.78rem;font-weight:600;color:#64748b;cursor:pointer}
+.tab-pill button.on{background:#fff;color:var(--pr);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.subpage{display:none}.subpage.on{display:block}
+
+@media(max-width:860px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.on{transform:translateX(0)}
+  .main{margin-left:0}
+  .ham{display:inline-block}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ AUTH ============ -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <svg class="brand-badge" viewBox="0 0 64 64" style="margin:0 auto;display:block">
+        <defs><linearGradient id="bgAuth" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#166534"/>
+        </linearGradient></defs>
+        <circle cx="32" cy="32" r="32" fill="url(#bgAuth)"/>
+        <text x="32" y="45" font-size="34" font-weight="800" font-family="Arial,Helvetica,sans-serif" fill="#fff" text-anchor="middle">G</text>
+      </svg>
+    </div>
+    <h1>Gidoyel Agro Alide And Services</h1>
+    <div class="sub">Farm Management System</div>
+    <div id="loginBox">
+      <div class="mb-2">
+        <label class="form-label">Username</label>
+        <input id="lg-user" class="form-control" placeholder="Username">
+      </div>
+      <div class="mb-2">
+        <label class="form-label">Password</label>
+        <input id="lg-pass" type="password" class="form-control" placeholder="Password">
+      </div>
+      <div id="lg-err" class="text-danger small mb-2" style="display:none"></div>
+      <button class="btn btn-pr w-100 mt-1" onclick="doLogin()">Log In</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+<div class="overlay" id="ovl" onclick="toggleSidebar(false)"></div>
+<div class="sidebar" id="sidebar">
+  <div class="sb-brand d-flex align-items-center gap-2">
+    <svg class="sb-badge" viewBox="0 0 64 64">
+      <defs><linearGradient id="bgSb" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#166534"/>
+      </linearGradient></defs>
+      <circle cx="32" cy="32" r="32" fill="url(#bgSb)"/>
+      <text x="32" y="45" font-size="34" font-weight="800" font-family="Arial,Helvetica,sans-serif" fill="#fff" text-anchor="middle">G</text>
+    </svg>
+    <div style="min-width:0">
+      <div class="sb-title" id="sb-farmname">Gidoyel Agro Alide And Services</div>
+      <div class="sb-sub">Farm Management System</div>
+    </div>
+  </div>
+  <div class="nav-sec">Overview</div>
+  <div class="nav-it on" data-pg="dash"><i class="fa-solid fa-gauge"></i> Dashboard</div>
+  <div class="nav-sec">Flock</div>
+  <div class="nav-it" data-pg="batches"><i class="fa-solid fa-kiwi-bird"></i> Batches</div>
+  <div class="nav-it" data-pg="feedstore"><i class="fa-solid fa-sack-xmark"></i> Feed Store</div>
+  <div class="nav-it" data-pg="supplies"><i class="fa-solid fa-boxes-stacked"></i> Supplies</div>
+  <div class="nav-it" data-pg="eggs"><i class="fa-solid fa-egg"></i> Eggs</div>
+  <div class="nav-sec role-admin">Business</div>
+  <div class="nav-it role-admin" data-pg="sales"><i class="fa-solid fa-cash-register"></i> Sales</div>
+  <div class="nav-it role-admin" data-pg="tools"><i class="fa-solid fa-toolbox"></i> Tools &amp; Equipment</div>
+  <div class="nav-it role-admin" data-pg="expenses"><i class="fa-solid fa-receipt"></i> Expenses</div>
+  <div class="nav-it role-admin" data-pg="finance"><i class="fa-solid fa-chart-line"></i> Finance &amp; Pricing</div>
+  <div class="nav-sec role-admin">Admin</div>
+  <div class="nav-it role-admin" data-pg="staff"><i class="fa-solid fa-users"></i> Staff</div>
+  <div class="nav-it role-super" data-pg="settings"><i class="fa-solid fa-gear"></i> Settings</div>
+  <div class="nav-it" data-pg="profile"><i class="fa-solid fa-user"></i> My Profile</div>
+  <div class="sb-foot d-flex align-items-center gap-2">
+    <div class="av" id="av-init">?</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:.78rem;font-weight:700;color:#fff" id="foot-name">-</div>
+      <div style="font-size:.62rem;color:#94a3b8" id="foot-role">-</div>
+    </div>
+    <button class="btn btn-sm" style="color:#94a3b8" onclick="doLogout()" title="Log out"><i class="fa-solid fa-right-from-bracket"></i></button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="d-flex align-items-center">
+      <button class="ham" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+      <div class="pg-title" id="pg-title">Dashboard</div>
+    </div>
+  </div>
+  <div class="pg-body">
+
+    <!-- DASHBOARD -->
+    <div class="page on" id="page-dash">
+      <div id="dash-alerts"></div>
+      <div class="row g-2 mb-3" id="dash-cards"></div>
+      <div class="row g-2">
+        <div class="col-lg-7">
+          <div class="card">
+            <div class="card-header">Active Batches</div>
+            <div class="tw"><table class="tbl w-100" id="dash-batch-tbl"><thead><tr><th>Batch</th><th>Status</th><th>Stock</th><th>Mortality %</th></tr></thead><tbody></tbody></table></div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card" id="dash-finance-card" style="display:none">
+            <div class="card-header">Farm Financial Snapshot</div>
+            <div class="p-3" id="dash-finance-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BATCHES LIST -->
+    <div class="page" id="page-batches">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div></div>
+        <button class="btn btn-pr btn-sm role-admin" onclick="openBatchMdl()"><i class="fa-solid fa-plus me-1"></i>New Batch</button>
+      </div>
+      <div class="row g-2" id="batch-grid"></div>
+    </div>
+
+    <!-- BATCH DETAIL -->
+    <div class="page" id="page-batchDetail">
+      <button class="btn btn-sm btn-outline-secondary mb-2" onclick="showPage('batches')"><i class="fa-solid fa-arrow-left me-1"></i>Back to Batches</button>
+      <div class="card mb-3">
+        <div class="p-3" id="bd-header"></div>
+      </div>
+      <div class="tab-pill" id="bd-tabs">
+        <button class="on" data-t="daily">Daily Log</button>
+        <button data-t="feed">Feed</button>
+        <button data-t="weight">Body Weight</button>
+        <button data-t="med">Medication</button>
+        <button data-t="vac">Vaccination</button>
+        <button class="role-admin" data-t="fin">Financials</button>
+      </div>
+
+      <div class="subpage on" id="bdt-daily">
+        <div class="card mb-3"><div class="card-header">Add / Update Today's Log</div><div class="p-3">
+          <div class="row g-2">
+            <div class="col-6 col-md-3"><label class="form-label">Date</label><input type="date" id="dl-date" class="form-control"></div>
+            <div class="col-6 col-md-3"><label class="form-label">Mortality (deaths)</label><input type="number" min="0" id="dl-mort" class="form-control" value="0"></div>
+            <div class="col-6 col-md-3"><label class="form-label">Water (liters)</label><input type="number" min="0" id="dl-water" class="form-control" value="0"></div>
+            <div class="col-12 col-md-3 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveDailyLog()">Save Log</button></div>
+            <div class="col-12"><label class="form-label">Remarks (what happened / what did not happen today)</label><textarea id="dl-remarks" class="form-control" rows="2"></textarea></div>
+          </div>
+        </div></div>
+        <div class="card"><div class="card-header">Recent Daily Logs</div>
+          <div class="tw"><table class="tbl w-100"><thead><tr><th>Date</th><th>Mortality</th><th>Water (L)</th><th>Remarks</th></tr></thead><tbody id="dl-tbl"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="subpage" id="bdt-feed">
+        <div class="card mb-3"><div class="card-header">Record Feed Consumed (Feed Out)</div><div class="p-3">
+          <div class="row g-2">
+            <div class="col-6 col-md-3"><label class="form-label">Date</label><input type="date" id="fo-date" class="form-control"></div>
+            <div class="col-6 col-md-3"><label class="form-label">Bags consumed</label><input type="number" min="0" step="0.1" id="fo-bags" class="form-control"></div>
+            <div class="col-12 col-md-4"><label class="form-label">Notes</label><input id="fo-notes" class="form-control"></div>
+            <div class="col-12 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveFeed('OUT')">Save</button></div>
+          </div>
+        </div></div>
+        <div class="card"><div class="card-header">Feed History (this batch)</div>
+          <div class="tw"><table class="tbl w-100"><thead><tr><th>Date</th><th>Type</th><th>Bags</th><th>Notes</th></tr></thead><tbody id="feed-tbl"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="subpage" id="bdt-weight">
+        <div class="card mb-3"><div class="card-header">Add Body Weight Sample</div><div class="p-3">
+          <div class="row g-2">
+            <div class="col-6 col-md-2"><label class="form-label">Date</label><input type="date" id="bw-date" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Size</label><select id="bw-size" class="form-select"><option value="small">Small</option><option value="medium" selected>Medium</option><option value="big">Big</option></select></div>
+            <div class="col-6 col-md-2"><label class="form-label">Avg weight (kg)</label><input type="number" min="0" step="0.01" id="bw-kg" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Sample count</label><input type="number" min="0" id="bw-count" class="form-control"></div>
+            <div class="col-8 col-md-2"><label class="form-label">Notes</label><input id="bw-notes" class="form-control"></div>
+            <div class="col-4 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveWeight()">Save</button></div>
+          </div>
+        </div></div>
+        <div class="card"><div class="card-header">Weight History</div>
+          <div class="tw"><table class="tbl w-100"><thead><tr><th>Date</th><th>Size</th><th>Avg Weight (kg)</th><th>Sample</th><th>Notes</th></tr></thead><tbody id="bw-tbl"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="subpage" id="bdt-med">
+        <div class="card mb-3"><div class="card-header">Add Medication Record</div><div class="p-3">
+          <div class="row g-2">
+            <div class="col-6 col-md-2"><label class="form-label">Date</label><input type="date" id="md-date" class="form-control"></div>
+            <div class="col-6 col-md-3"><label class="form-label">Medication name</label><input id="md-name" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Dosage</label><input id="md-dose" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Cost</label><input type="number" min="0" id="md-cost" class="form-control"></div>
+            <div class="col-8 col-md-2"><label class="form-label">Notes</label><input id="md-notes" class="form-control"></div>
+            <div class="col-4 col-md-1 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveMed()">Save</button></div>
+          </div>
+        </div></div>
+        <div class="card"><div class="card-header">Medication History</div>
+          <div class="tw"><table class="tbl w-100"><thead><tr><th>Date</th><th>Name</th><th>Dosage</th><th>Cost</th><th>Notes</th></tr></thead><tbody id="md-tbl"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="subpage" id="bdt-vac">
+        <div class="card mb-3"><div class="card-header">Add Vaccination Record</div><div class="p-3">
+          <div class="row g-2">
+            <div class="col-6 col-md-3"><label class="form-label">Date</label><input type="date" id="vc-date" class="form-control"></div>
+            <div class="col-6 col-md-3"><label class="form-label">Vaccine name</label><input id="vc-name" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Cost</label><input type="number" min="0" id="vc-cost" class="form-control"></div>
+            <div class="col-8 col-md-3"><label class="form-label">Notes</label><input id="vc-notes" class="form-control"></div>
+            <div class="col-4 col-md-1 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveVac()">Save</button></div>
+          </div>
+        </div></div>
+        <div class="card"><div class="card-header">Vaccination History</div>
+          <div class="tw"><table class="tbl w-100"><thead><tr><th>Date</th><th>Name</th><th>Cost</th><th>Notes</th></tr></thead><tbody id="vc-tbl"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="subpage role-admin" id="bdt-fin">
+        <div class="row g-2" id="bd-fin-cards"></div>
+      </div>
+    </div>
+
+    <!-- EGGS -->
+    <div class="page" id="page-eggs">
+      <div class="row g-2 mb-3" id="egg-stat-cards"></div>
+      <div class="tab-pill">
+        <button class="on" data-et="log">Daily Egg Log</button>
+        <button data-et="pens">Pens</button>
+      </div>
+      <div class="subpage on" id="et-log">
+        <div class="card mb-3"><div class="card-header">Record Today's Egg Collection</div><div class="p-3">
+          <div class="row g-2">
+            <div class="col-6 col-md-3"><label class="form-label">Pen</label><select id="eg-pen" class="form-select"></select></div>
+            <div class="col-6 col-md-2"><label class="form-label">Date</label><input type="date" id="eg-date" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Crates collected</label><input type="number" min="0" step="0.1" id="eg-crates" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Cracked eggs</label><input type="number" min="0" id="eg-cracked" class="form-control" value="0"></div>
+            <div class="col-8 col-md-2"><label class="form-label">Cracked remarks</label><input id="eg-crkrem" class="form-control" placeholder="what was done"></div>
+            <div class="col-4 col-md-1 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveEggLog()">Save</button></div>
+          </div>
+        </div></div>
+        <div class="card"><div class="card-header">Recent Egg Logs</div>
+          <div class="tw"><table class="tbl w-100"><thead><tr><th>Date</th><th>Pen</th><th>Crates</th><th>Cracked</th><th>Remarks</th></tr></thead><tbody id="egg-tbl"></tbody></table></div>
+        </div>
+      </div>
+      <div class="subpage" id="et-pens">
+        <div class="card mb-3"><div class="card-header">Add Pen</div><div class="p-3">
+          <div class="row g-2">
+            <div class="col-6 col-md-4"><label class="form-label">Pen name/number</label><input id="pen-name" class="form-control" placeholder="e.g. Pen 1"></div>
+            <div class="col-6 col-md-4"><label class="form-label">Batch laying in this pen</label><select id="pen-batch" class="form-select"><option value="">-- none --</option></select></div>
+            <div class="col-12 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="savePen()">Add Pen</button></div>
+          </div>
+        </div></div>
+        <div class="card"><div class="card-header">Pens</div>
+          <div class="tw"><table class="tbl w-100"><thead><tr><th>Pen</th><th>Batch</th><th></th></tr></thead><tbody id="pen-tbl"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALES -->
+    <div class="page" id="page-sales">
+      <div class="tab-pill">
+        <button class="on" data-st="chicken">Chicken Sales</button>
+        <button data-st="egg">Egg Sales</button>
+      </div>
+      <div class="subpage on" id="st-chicken">
+        <div class="card mb-3"><div class="card-header">Record Chicken Sale</div><div class="p-3">
+          <div class="row g-2">
+            <div class="col-6 col-md-3"><label class="form-label">Batch</label><select id="cs-batch" class="form-select"></select></div>
+            <div class="col-6 col-md-2"><label class="form-label">Date</label><input type="date" id="cs-date" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Quantity</label><input type="number" min="1" id="cs-qty" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Price/bird</label><input type="number" min="0" id="cs-price" class="form-control"></div>
+            <div class="col-6 col-md-3"><label class="form-label">Buyer name</label><input id="cs-buyer" class="form-control"></div>
+            <div class="col-6 col-md-3"><label class="form-label">Buyer phone</label><input id="cs-phone" class="form-control"></div>
+            <div class="col-6 col-md-4"><label class="form-label">Notes</label><input id="cs-notes" class="form-control"></div>
+            <div class="col-12 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveChickenSale()">Record Sale</button></div>
+          </div>
+        </div></div>
+        <div class="card"><div class="card-header">Chicken Sales History</div>
+          <div class="tw"><table class="tbl w-100"><thead><tr><th>Receipt</th><th>Date</th><th>Batch</th><th>Buyer</th><th>Qty</th><th>Price/bird</th><th>Total</th></tr></thead><tbody id="cs-tbl"></tbody></table></div>
+        </div>
+      </div>
+      <div class="subpage" id="st-egg">
+        <div class="card mb-3"><div class="card-header">Record Egg Sale</div><div class="p-3">
+          <div class="row g-2">
+            <div class="col-6 col-md-3"><label class="form-label">Batch (optional)</label><select id="es-batch" class="form-select"><option value="">Mixed / Unassigned</option></select></div>
+            <div class="col-6 col-md-2"><label class="form-label">Date</label><input type="date" id="es-date" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Crates sold</label><input type="number" min="0.1" step="0.1" id="es-crates" class="form-control"></div>
+            <div class="col-6 col-md-2"><label class="form-label">Price/crate</label><input type="number" min="0" id="es-price" class="form-control"></div>
+            <div class="col-6 col-md-3"><label class="form-label">Buyer name</label><input id="es-buyer" class="form-control"></div>
+            <div class="col-6 col-md-3"><label class="form-label">Buyer phone</label><input id="es-phone" class="form-control"></div>
+            <div class="col-6 col-md-4"><label class="form-label">Notes</label><input id="es-notes" class="form-control"></div>
+            <div class="col-12 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveEggSale()">Record Sale</button></div>
+          </div>
+        </div></div>
+        <div class="card"><div class="card-header">Egg Sales History</div>
+          <div class="tw"><table class="tbl w-100"><thead><tr><th>Receipt</th><th>Date</th><th>Batch</th><th>Buyer</th><th>Crates</th><th>Price/crate</th><th>Total</th></tr></thead><tbody id="es-tbl"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <!-- FEED STORE -->
+    <div class="page" id="page-feedstore">
+      <div class="card mb-3"><div class="card-header">Feed Store</div><div class="p-3">
+        <div class="row g-2 mb-3" id="fs-cards"></div>
+        <div class="row g-2 role-admin">
+          <div class="col-6 col-md-2"><label class="form-label">Date</label><input type="date" id="fi-date" class="form-control"></div>
+          <div class="col-6 col-md-2"><label class="form-label">Bags bought</label><input type="number" min="0" step="0.1" id="fi-bags" class="form-control"></div>
+          <div class="col-6 col-md-2"><label class="form-label">Total cost paid</label><input type="number" min="0" step="0.01" id="fi-total" class="form-control"></div>
+          <div class="col-6 col-md-2"><label class="form-label">Transport cost <span class="text-muted">(optional)</span></label><input type="number" min="0" step="0.01" id="fi-transport" class="form-control"></div>
+          <div class="col-12 col-md-4"><label class="form-label">Notes</label><input id="fi-notes" class="form-control"></div>
+          <div class="col-12 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveFeedIn()">Add Feed In</button></div>
+        </div>
+        <div class="text-muted small mt-2 role-admin">Transport cost is logged separately under Expenses (Transport category) so your feed cost-per-bag stays feed-only.</div>
+        <div class="tw mt-3"><table class="tbl w-100"><thead><tr><th>Date</th><th>Type</th><th>Bags</th><th>Cost/bag</th><th>Total</th><th>Notes</th></tr></thead><tbody id="fs-tbl"></tbody></table></div>
+      </div></div>
+    </div>
+
+    <!-- SUPPLIES (charcoal, sawdust, and other bagged consumables) -->
+    <div class="page" id="page-supplies">
+      <div class="card mb-3"><div class="card-header">Supply Items</div><div class="p-3">
+        <div class="row g-2 mb-3" id="sp-cards"></div>
+        <div class="row g-2 role-admin">
+          <div class="col-6 col-md-4"><label class="form-label">New item name</label><input id="sp-name" class="form-control" placeholder="e.g. Charcoal, Sawdust"></div>
+          <div class="col-6 col-md-3"><label class="form-label">Low stock alert (bags)</label><input type="number" min="0" id="sp-thresh" class="form-control" value="5"></div>
+          <div class="col-12 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="addSupplyItem()">Add Item</button></div>
+        </div>
+      </div></div>
+      <div class="card"><div class="card-header">Record Stock In / Out</div><div class="p-3">
+        <div class="row g-2">
+          <div class="col-6 col-md-3"><label class="form-label">Item</label><select id="sp-item" class="form-select"></select></div>
+          <div class="col-6 col-md-2"><label class="form-label">Date</label><input type="date" id="sp-date" class="form-control"></div>
+          <div class="col-6 col-md-2"><label class="form-label">Bags</label><input type="number" min="0" step="0.1" id="sp-qty" class="form-control"></div>
+          <div class="col-6 col-md-2 role-admin"><label class="form-label">Total cost (if buying)</label><input type="number" min="0" step="0.01" id="sp-cost" class="form-control"></div>
+          <div class="col-12 col-md-3"><label class="form-label">Notes</label><input id="sp-notes" class="form-control"></div>
+        </div>
+        <div class="d-flex gap-2 mt-2">
+          <button class="btn btn-outline-success" onclick="saveSupplyTxn('OUT')">Record Used</button>
+          <button class="btn btn-pr role-admin" onclick="saveSupplyTxn('IN')">Record Purchase (In)</button>
+        </div>
+        <div class="tw mt-3"><table class="tbl w-100"><thead><tr><th>Date</th><th>Type</th><th>Bags</th><th>Cost</th><th>Notes</th></tr></thead><tbody id="sp-tbl"></tbody></table></div>
+      </div></div>
+    </div>
+
+    <div class="page" id="page-tools">
+      <div class="row g-2 mb-3">
+        <div class="col-md-6">
+          <div class="card"><div class="card-header d-flex justify-content-between">Categories <a href="#" onclick="addToolCat();return false;" style="font-size:.75rem">+ add</a></div>
+            <div class="p-2"><input id="tc-name" class="form-control form-control-sm mb-2" placeholder="New category name (e.g. Building, Feeding)">
+            <div class="tw"><table class="tbl w-100"><thead><tr><th>Category</th><th>Tools</th></tr></thead><tbody id="tc-tbl"></tbody></table></div>
+          </div></div>
+        </div>
+        <div class="col-md-6">
+          <div class="card"><div class="card-header">Add Tool</div><div class="p-3">
+            <div class="row g-2">
+              <div class="col-12"><label class="form-label">Category</label><select id="tl-cat" class="form-select"></select></div>
+              <div class="col-12"><label class="form-label">Tool name</label><input id="tl-name" class="form-control"></div>
+              <div class="col-6"><label class="form-label">Quantity</label><input type="number" min="0" id="tl-qty" class="form-control" value="1"></div>
+              <div class="col-6"><label class="form-label">Unit cost</label><input type="number" min="0" id="tl-cost" class="form-control"></div>
+              <div class="col-12"><button class="btn btn-pr w-100" onclick="saveTool()">Add Tool</button></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+      <div class="card"><div class="card-header">Tools &amp; Equipment</div>
+        <div class="tw"><table class="tbl w-100"><thead><tr><th>Date</th><th>Category</th><th>Tool</th><th>Qty</th><th>Unit Cost</th><th>Total</th></tr></thead><tbody id="tl-tbl"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- EXPENSES -->
+    <div class="page" id="page-expenses">
+      <div class="card mb-3"><div class="card-header">Add Expense</div><div class="p-3">
+        <div class="row g-2">
+          <div class="col-6 col-md-2"><label class="form-label">Date</label><input type="date" id="ex-date" class="form-control"></div>
+          <div class="col-6 col-md-2"><label class="form-label">Category</label><select id="ex-cat" class="form-select"><option>Labor</option><option>Transport</option><option>Utilities</option><option>Maintenance</option><option>Other</option></select></div>
+          <div class="col-12 col-md-4"><label class="form-label">Description</label><input id="ex-desc" class="form-control" placeholder="What is this expense for?"></div>
+          <div class="col-6 col-md-2"><label class="form-label">Amount</label><input type="number" min="0" id="ex-amt" class="form-control"></div>
+          <div class="col-6 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveExpense()">Add</button></div>
+        </div>
+      </div></div>
+      <div class="card"><div class="card-header">Expenses</div>
+        <div class="tw"><table class="tbl w-100"><thead><tr><th>Date</th><th>Category</th><th>Description</th><th>Amount</th></tr></thead><tbody id="ex-tbl"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- FINANCE -->
+    <div class="page" id="page-finance">
+      <div class="row g-2 mb-3" id="fin-cards"></div>
+      <div class="card mb-3"><div class="card-header">Per-Batch Profit &amp; Loss</div>
+        <div class="tw"><table class="tbl w-100"><thead><tr><th>Batch</th><th>Cost</th><th>Revenue</th><th>Profit</th></tr></thead><tbody id="fin-tbl"></tbody></table></div>
+      </div>
+      <div class="card mb-3"><div class="card-header">Spending by Category</div>
+        <div class="tw"><table class="tbl w-100"><thead><tr><th>Category</th><th>Amount</th><th>% of Total</th></tr></thead><tbody id="fb-tbl"></tbody></table></div>
+      </div>
+      <div class="card"><div class="card-header">Predictive Selling Price Calculator</div><div class="p-3">
+        <div class="row g-2">
+          <div class="col-6 col-md-3"><label class="form-label">Batch</label><select id="pp-batch" class="form-select"></select></div>
+          <div class="col-6 col-md-2"><label class="form-label">Selling</label><select id="pp-type" class="form-select"><option value="chicken">Chickens (live)</option><option value="egg">Eggs (crates)</option></select></div>
+          <div class="col-6 col-md-2"><label class="form-label">Target profit %</label><input type="number" min="0" id="pp-pct" class="form-control" value="20"></div>
+          <div class="col-6 col-md-3"><label class="form-label">Quantity to price against <span class="text-muted" id="pp-qty-hint"></span></label><input type="number" min="0" step="0.1" id="pp-qty" class="form-control" placeholder="auto (remaining stock)"></div>
+          <div class="col-12 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="calcPrice()">Calculate</button></div>
+        </div>
+        <div id="pp-result" class="mt-3"></div>
+      </div></div>
+    </div>
+
+    <!-- STAFF -->
+    <div class="page" id="page-staff">
+      <div class="card mb-3"><div class="card-header">Add Staff / Admin</div><div class="p-3">
+        <div class="row g-2">
+          <div class="col-6 col-md-3"><label class="form-label">Full name</label><input id="sf-name" class="form-control"></div>
+          <div class="col-6 col-md-2"><label class="form-label">Username</label><input id="sf-user" class="form-control"></div>
+          <div class="col-6 col-md-2"><label class="form-label">Phone</label><input id="sf-phone" class="form-control"></div>
+          <div class="col-6 col-md-2"><label class="form-label">Password</label><input id="sf-pass" class="form-control" placeholder="default 1234"></div>
+          <div class="col-6 col-md-2"><label class="form-label">Role</label><select id="sf-role" class="form-select"><option value="staff">Staff</option><option value="admin" class="role-super-opt">Admin</option></select></div>
+          <div class="col-12 col-md-1 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveStaff()">Add</button></div>
+        </div>
+      </div></div>
+      <div class="card"><div class="card-header">Team</div>
+        <div class="tw"><table class="tbl w-100"><thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Phone</th><th>Status</th><th></th></tr></thead><tbody id="sf-tbl"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+      <div class="card"><div class="card-header">Farm Settings</div><div class="p-3">
+        <div class="row g-2">
+          <div class="col-12 col-md-4"><label class="form-label">Farm name</label><input id="st-farmname" class="form-control"></div>
+          <div class="col-6 col-md-3"><label class="form-label">Low feed alert (bags)</label><input type="number" min="0" id="st-feedthresh" class="form-control"></div>
+          <div class="col-6 col-md-3"><label class="form-label">High mortality alert (%)</label><input type="number" min="0" step="0.1" id="st-mortthresh" class="form-control"></div>
+          <div class="col-12 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="saveSettings()">Save</button></div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="page" id="page-profile">
+      <div class="card" style="max-width:480px"><div class="card-header">My Profile</div><div class="p-3">
+        <div class="mb-2"><label class="form-label">Full name</label><input id="pf-name" class="form-control"></div>
+        <div class="mb-2"><label class="form-label">Username</label><input id="pf-user" class="form-control"></div>
+        <div class="mb-2"><label class="form-label">Phone</label><input id="pf-phone" class="form-control"></div>
+        <hr>
+        <div class="mb-2"><label class="form-label">Current password (to change password)</label><input type="password" id="pf-curpw" class="form-control"></div>
+        <div class="mb-2"><label class="form-label">New password</label><input type="password" id="pf-newpw" class="form-control"></div>
+        <button class="btn btn-pr w-100" onclick="saveProfile()">Save Changes</button>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- BATCH MODAL -->
+<div class="modal fade" id="mdlBatch" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header"><h6 class="modal-title">New Batch</h6><button class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <div class="mb-2"><label class="form-label">Batch label</label><input id="bt-label" class="form-control" placeholder="e.g. Batch 1 - Jan 2026"></div>
+    <div class="mb-2"><label class="form-label">Date purchased</label><input type="date" id="bt-date" class="form-control"></div>
+    <div class="row g-2">
+      <div class="col-6"><label class="form-label">Quantity ordered/paid for</label><input type="number" min="0" id="bt-qord" class="form-control"></div>
+      <div class="col-6"><label class="form-label">Quantity actually received</label><input type="number" min="0" id="bt-qrec" class="form-control"></div>
+    </div>
+    <div class="mb-2 mt-2"><label class="form-label">Amount paid</label><input type="number" min="0" id="bt-paid" class="form-control"></div>
+    <div class="mb-2 form-check">
+      <input type="checkbox" class="form-check-input" id="bt-pol">
+      <label class="form-check-label" for="bt-pol">Bought at point of lay (already laying, skip growing)</label>
+    </div>
+    <div class="mb-2"><label class="form-label">Notes</label><textarea id="bt-notes" class="form-control" rows="2"></textarea></div>
+  </div>
+  <div class="modal-footer"><button class="btn btn-pr" onclick="saveBatch()">Save Batch</button></div>
+</div></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+function $(id){return document.getElementById(id);}
+let ME=null, BATCHES=[], PENS=[];
+
+async function api(url,method='GET',body=null){
+  const opt={method,headers:{'Content-Type':'application/json'}};
+  if(body) opt.body=JSON.stringify(body);
+  const r=await fetch(url,opt);
+  if(r.status===401){
+    if($('app').style.display==='block') location.href='/login';
+    return {};
+  }
+  return r.json();
+}
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function money(n){return 'N'+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});}
+function esc(s){return (s??'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ===== AUTH ===== */
+async function doLogin(){
+  $('lg-err').style.display='none';
+  const r=await api('/login','POST',{username:$('lg-user').value.trim(),password:$('lg-pass').value});
+  if(r.success){ initApp(); }
+  else { $('lg-err').textContent=r.error||'Login failed'; $('lg-err').style.display='block'; }
+}
+async function doLogout(){location.href='/logout';}
+
+/* ===== APP INIT / NAV ===== */
+async function initApp(){
+  ME=await api('/api/me');
+  if(!ME.id) return;
+  $('auth-screen').style.display='none';
+  $('app').style.display='block';
+  $('foot-name').textContent=ME.full_name;
+  $('foot-role').textContent=ME.role.replace('_',' ').toUpperCase();
+  $('av-init').textContent=(ME.full_name||'?').charAt(0).toUpperCase();
+  document.querySelectorAll('.role-admin').forEach(e=>e.style.display=(ME.role==='admin'||ME.role==='super_admin')?'':'none');
+  document.querySelectorAll('.role-super').forEach(e=>e.style.display=(ME.role==='super_admin')?'':'none');
+  document.querySelectorAll('.role-super-opt').forEach(e=>e.style.display=(ME.role==='super_admin')?'':'none');
+  document.querySelectorAll('.nav-it').forEach(el=>el.onclick=()=>showPage(el.dataset.pg));
+  document.querySelectorAll('#bd-tabs button').forEach(b=>b.onclick=()=>showSub('bd-tabs','bdt-',b));
+  document.querySelectorAll('#page-eggs .tab-pill button').forEach(b=>b.onclick=()=>showSub(b.parentElement,'et-',b));
+  document.querySelectorAll('#page-sales .tab-pill button').forEach(b=>b.onclick=()=>showSub(b.parentElement,'st-',b));
+  ['dl-date','fo-date','fi-date','sp-date','bw-date','md-date','vc-date','eg-date','cs-date','es-date','ex-date','bt-date'].forEach(id=>{if($(id))$(id).value=todayStr();});
+  if($('sp-item')) $('sp-item').onchange=loadSupplyTxns;
+  await loadDash();
+  await reloadBatchCache();
+}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-it').forEach(n=>n.classList.remove('on'));
+  $('page-'+id).classList.add('on');
+  const nav=document.querySelector(`.nav-it[data-pg="${id}"]`); if(nav) nav.classList.add('on');
+  $('pg-title').textContent=nav?nav.textContent.trim():id;
+  toggleSidebar(false);
+  if(id==='dash') loadDash();
+  if(id==='batches') loadBatches();
+  if(id==='feedstore') loadFeedStore();
+  if(id==='supplies') loadSuppliesPage();
+  if(id==='eggs') loadEggsPage();
+  if(id==='sales') loadSalesPage();
+  if(id==='tools') loadToolsPage();
+  if(id==='expenses') loadExpenses();
+  if(id==='finance') loadFinancePage();
+  if(id==='staff') loadStaff();
+  if(id==='settings') loadSettings();
+  if(id==='profile') loadProfile();
+}
+function showSub(container,prefix,btn){
+  const wrap = typeof container==='string' ? $(container) : container;
+  wrap.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const parent = wrap.parentElement;
+  parent.querySelectorAll('.subpage').forEach(s=>{
+    if(s.id.startsWith(prefix)) s.classList.toggle('on', s.id===prefix+btn.dataset.t || s.id===prefix+btn.dataset.et || s.id===prefix+btn.dataset.st);
+  });
+}
+function toggleSidebar(force){
+  const on = force!==undefined?force:!$('sidebar').classList.contains('on');
+  $('sidebar').classList.toggle('on',on); $('ovl').classList.toggle('on',on);
+}
+
+/* ===== DASHBOARD ===== */
+function alertHtml(a){
+  const icon = a.severity==='danger'?'triangle-exclamation':(a.severity==='warning'?'circle-exclamation':'circle-info');
+  return `<div class="alertbox al-${a.severity}"><i class="fa-solid fa-${icon} mt-1"></i><div>${esc(a.message)}</div></div>`;
+}
+function statCard(icon,cls,label,val,sub,page){
+  const nav = page ? document.querySelector(`.nav-it[data-pg="${page}"]`) : null;
+  const clickable = !!page && (!nav || nav.style.display !== 'none');
+  return `<div class="col-6 col-md-4 col-lg-3"><div class="scard${clickable?' scard-link':''}"${clickable?` onclick="showPage('${page}')"`:''}><div class="sicon ${cls}"><i class="fa-solid fa-${icon}"></i></div>
+    <div class="slabel">${label}</div><div class="sval">${val}</div>${sub?`<div class="ssub">${sub}</div>`:''}</div></div>`;
+}
+async function loadDash(){
+  const d=await api('/api/dashboard');
+  if(d.farm_name) $('sb-farmname').textContent=d.farm_name;
+  $('dash-alerts').innerHTML=(d.alerts||[]).map(alertHtml).join('');
+  let cards='';
+  cards+=statCard('kiwi-bird','ig','Active Batches',d.active_batches,null,'batches');
+  cards+=statCard('feather-pointed','ib','Total Birds',d.total_birds,null,'batches');
+  cards+=statCard('skull','ir','Mortality Today',d.today_mortality,null,'batches');
+  cards+=statCard('sack-xmark','iy','Feed Stock (bags)',d.feed_balance_bags,null,'feedstore');
+  cards+=statCard('egg','ip','Egg Stock (crates)',d.egg_stock_crates,'Collected today: '+d.egg_collected_today_crates,'eggs');
+  cards+=statCard('cash-register','io','Sales Today',money(d.today_revenue),d.today_sales_count+' transaction(s)','sales');
+  cards+=statCard('wheat-awn','iy','Feed Used Today (bags)',d.today_feed_bags,null,'feedstore');
+  if(d.today_expenses!==undefined) cards+=statCard('receipt','io','Expenses Today',money(d.today_expenses),null,'expenses');
+  $('dash-cards').innerHTML=cards;
+  $('dash-batch-tbl').querySelector('tbody').innerHTML=(d.batches||[]).map(b=>`<tr>
+    <td>${esc(b.label)}</td><td><span class="b b-${statusColor(b.status)}">${b.status}</span></td>
+    <td>${b.quantity_current}</td><td>${b.mortality_rate_pct}%</td></tr>`).join('') || '<tr><td colspan="4" class="text-muted">No batches yet</td></tr>';
+  if(d.total_profit_all_batches!==undefined){
+    $('dash-finance-card').style.display='';
+    $('dash-finance-body').innerHTML=`
+      <div class="d-flex justify-content-between mb-2"><span>Total Cost</span><b>${money(d.total_cost_all_batches)}</b></div>
+      <div class="d-flex justify-content-between mb-2"><span>Total Revenue</span><b>${money(d.total_revenue_all_batches)}</b></div>
+      <div class="d-flex justify-content-between"><span>Profit</span><b class="${d.total_profit_all_batches>=0?'text-success':'text-danger'}">${money(d.total_profit_all_batches)}</b></div>`;
+  } else { $('dash-finance-card').style.display='none'; }
+}
+function statusColor(s){return s==='laying'?'green':(s==='closed'?'gray':'blue');}
+
+/* ===== BATCHES ===== */
+async function reloadBatchCache(){
+  BATCHES=await api('/api/batches');
+  fillBatchSelects();
+}
+function fillBatchSelects(){
+  const opts=BATCHES.map(b=>`<option value="${b.id}">${esc(b.label)} (${b.quantity_current} left)</option>`).join('');
+  ['cs-batch','pp-batch'].forEach(id=>{ if($(id)) $(id).innerHTML=opts; });
+  if($('es-batch')) $('es-batch').innerHTML='<option value="">Mixed / Unassigned</option>'+opts;
+  if($('pen-batch')) $('pen-batch').innerHTML='<option value="">-- none --</option>'+opts;
+}
+async function loadBatches(){
+  await reloadBatchCache();
+  $('batch-grid').innerHTML=BATCHES.map(b=>`
+    <div class="col-md-4 col-lg-3"><div class="bcard" onclick="openBatch(${b.id})">
+      <div class="bc-name">${esc(b.label)}</div>
+      <span class="b b-${statusColor(b.status)}">${b.status}</span>
+      <div class="bc-metrics">
+        <div><div class="pm-lbl">Stock</div><div class="pm-val">${b.quantity_current}</div></div>
+        <div><div class="pm-lbl">Mortality</div><div class="pm-val">${b.mortality_rate_pct}%</div></div>
+        <div><div class="pm-lbl">Received</div><div class="pm-val">${b.quantity_received}</div></div>
+        <div><div class="pm-lbl">Cost/bird</div><div class="pm-val">${money(b.cost_per_bird)}</div></div>
+      </div>
+    </div></div>`).join('') || '<div class="col-12 text-muted">No batches yet. Click "New Batch" to add your first flock.</div>';
+}
+function openBatchMdl(){
+  $('bt-label').value='';$('bt-date').value=todayStr();$('bt-qord').value='';$('bt-qrec').value='';$('bt-paid').value='';$('bt-notes').value='';$('bt-pol').checked=false;
+  new bootstrap.Modal($('mdlBatch')).show();
+}
+async function saveBatch(){
+  const label=$('bt-label').value.trim();
+  if(!label){alert('Batch label required');return;}
+  const r=await api('/api/batches','POST',{
+    label, date_purchased:$('bt-date').value,
+    quantity_ordered:$('bt-qord').value||0, quantity_received:$('bt-qrec').value||0,
+    amount_paid:$('bt-paid').value||0, notes:$('bt-notes').value,
+    point_of_lay:$('bt-pol').checked
+  });
+  if(r.success){ bootstrap.Modal.getInstance($('mdlBatch')).hide(); await loadBatches(); }
+  else alert(r.error||'Error');
+}
+
+let CUR_BATCH=null;
+async function openBatch(id){
+  CUR_BATCH=await api('/api/batches/'+id);
+  showPage('batchDetail');
+  renderBatchHeader();
+  document.querySelectorAll('#bd-tabs button')[0].click();
+  loadDailyLogs(); loadFeed(); loadWeights(); loadMeds(); loadVacs();
+  if(ME.role==='admin'||ME.role==='super_admin') loadBatchFin();
+}
+function renderBatchHeader(){
+  const b=CUR_BATCH;
+  $('bd-header').innerHTML=`
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+      <div>
+        <div style="font-size:1rem;font-weight:800">${esc(b.label)} <span class="b b-${statusColor(b.status)}">${b.status}</span></div>
+        <div class="text-muted small">Purchased ${b.date_purchased} · Ordered ${b.quantity_ordered} · Received ${b.quantity_received} · Paid ${money(b.amount_paid)} (${money(b.cost_per_bird)}/bird)</div>
+      </div>
+      <div class="d-flex gap-2 role-admin">
+        ${b.status!=='laying'?`<button class="btn btn-sm btn-outline-success" onclick="setBatchStatus('laying')">Mark Laying</button>`:''}
+        ${b.status!=='closed'?`<button class="btn btn-sm btn-outline-secondary" onclick="setBatchStatus('closed')">Close Batch</button>`:''}
+      </div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-6 col-md-3"><div class="pm-lbl">Current Stock</div><div class="pm-val">${b.quantity_current}</div></div>
+      <div class="col-6 col-md-3"><div class="pm-lbl">Total Mortality</div><div class="pm-val">${b.total_mortality} (${b.mortality_rate_pct}%)</div></div>
+      <div class="col-6 col-md-3"><div class="pm-lbl">Total Sold</div><div class="pm-val">${b.total_sold}</div></div>
+      <div class="col-6 col-md-3"><div class="pm-lbl">Laying Since</div><div class="pm-val">${b.laying_start_date||'-'}</div></div>
+    </div>`;
+  document.querySelectorAll('.role-admin').forEach(e=>e.style.display=(ME.role==='admin'||ME.role==='super_admin')?'':'none');
+}
+async function setBatchStatus(status){
+  await api('/api/batches/'+CUR_BATCH.id,'PUT',{status});
+  CUR_BATCH=await api('/api/batches/'+CUR_BATCH.id);
+  renderBatchHeader();
+  reloadBatchCache();
+}
+
+async function loadDailyLogs(){
+  const logs=await api(`/api/batches/${CUR_BATCH.id}/daily-logs`);
+  $('dl-tbl').innerHTML=logs.map(l=>`<tr><td>${l.log_date}</td><td>${l.mortality}</td><td>${l.water_liters}</td><td>${esc(l.remarks)}</td></tr>`).join('') || '<tr><td colspan="4" class="text-muted">No logs yet</td></tr>';
+}
+async function saveDailyLog(){
+  const r=await api(`/api/batches/${CUR_BATCH.id}/daily-logs`,'POST',{
+    log_date:$('dl-date').value, mortality:$('dl-mort').value||0, water_liters:$('dl-water').value||0, remarks:$('dl-remarks').value
+  });
+  if(r.success){ $('dl-mort').value=0;$('dl-water').value=0;$('dl-remarks').value=''; loadDailyLogs(); CUR_BATCH=await api('/api/batches/'+CUR_BATCH.id); renderBatchHeader(); }
+  else alert(r.error||'Error');
+}
+
+async function loadFeed(){
+  const txns=await api('/api/feed?batch_id='+CUR_BATCH.id);
+  $('feed-tbl').innerHTML=txns.map(t=>`<tr><td>${t.txn_date}</td><td><span class="b ${t.txn_type==='IN'?'b-green':'b-amber'}">${t.txn_type}</span></td><td>${t.bags}</td><td>${esc(t.notes)}</td></tr>`).join('') || '<tr><td colspan="4" class="text-muted">No feed records yet</td></tr>';
+}
+async function saveFeed(type){
+  const r=await api('/api/feed','POST',{txn_type:type, batch_id:CUR_BATCH.id, txn_date:$('fo-date').value, bags:$('fo-bags').value||0, notes:$('fo-notes').value});
+  if(r.success){ $('fo-bags').value='';$('fo-notes').value=''; loadFeed(); } else alert(r.error||'Error');
+}
+
+async function loadWeights(){
+  const ws=await api(`/api/batches/${CUR_BATCH.id}/weights`);
+  $('bw-tbl').innerHTML=ws.map(w=>`<tr><td>${w.weigh_date}</td><td class="text-capitalize">${w.size_category}</td><td>${w.avg_weight_kg}</td><td>${w.sample_count}</td><td>${esc(w.notes)}</td></tr>`).join('') || '<tr><td colspan="5" class="text-muted">No weight records yet</td></tr>';
+}
+async function saveWeight(){
+  const r=await api(`/api/batches/${CUR_BATCH.id}/weights`,'POST',{weigh_date:$('bw-date').value,size_category:$('bw-size').value,avg_weight_kg:$('bw-kg').value||0,sample_count:$('bw-count').value||0,notes:$('bw-notes').value});
+  if(r.success){ $('bw-kg').value='';$('bw-count').value='';$('bw-notes').value=''; loadWeights(); } else alert(r.error||'Error');
+}
+
+async function loadMeds(){
+  const ms=await api(`/api/batches/${CUR_BATCH.id}/medications`);
+  $('md-tbl').innerHTML=ms.map(m=>`<tr><td>${m.med_date}</td><td>${esc(m.name)}</td><td>${esc(m.dosage)}</td><td>${money(m.cost)}</td><td>${esc(m.notes)}</td></tr>`).join('') || '<tr><td colspan="5" class="text-muted">No medication records yet</td></tr>';
+}
+async function saveMed(){
+  const name=$('md-name').value.trim(); if(!name){alert('Medication name required');return;}
+  const r=await api(`/api/batches/${CUR_BATCH.id}/medications`,'POST',{med_date:$('md-date').value,name,dosage:$('md-dose').value,cost:$('md-cost').value||0,notes:$('md-notes').value});
+  if(r.success){ $('md-name').value='';$('md-dose').value='';$('md-cost').value='';$('md-notes').value=''; loadMeds(); } else alert(r.error||'Error');
+}
+
+async function loadVacs(){
+  const vs=await api(`/api/batches/${CUR_BATCH.id}/vaccinations`);
+  $('vc-tbl').innerHTML=vs.map(v=>`<tr><td>${v.vac_date}</td><td>${esc(v.name)}</td><td>${money(v.cost)}</td><td>${esc(v.notes)}</td></tr>`).join('') || '<tr><td colspan="4" class="text-muted">No vaccination records yet</td></tr>';
+}
+async function saveVac(){
+  const name=$('vc-name').value.trim(); if(!name){alert('Vaccine name required');return;}
+  const r=await api(`/api/batches/${CUR_BATCH.id}/vaccinations`,'POST',{vac_date:$('vc-date').value,name,cost:$('vc-cost').value||0,notes:$('vc-notes').value});
+  if(r.success){ $('vc-name').value='';$('vc-cost').value='';$('vc-notes').value=''; loadVacs(); } else alert(r.error||'Error');
+}
+
+async function loadBatchFin(){
+  const f=await api('/api/finance/batches/'+CUR_BATCH.id);
+  $('bd-fin-cards').innerHTML=[
+    ['sack-dollar','ir','Purchase Cost',money(f.purchase_cost)],
+    ['wheat-awn','iy','Feed Cost',money(f.feed_cost)],
+    ['pills','ip','Medication Cost',money(f.medication_cost)],
+    ['syringe','ib','Vaccination Cost',money(f.vaccination_cost)],
+    ['coins','io','Total Cost',money(f.total_cost)],
+    ['hand-holding-dollar','ig','Total Revenue',money(f.total_revenue)],
+  ].map(c=>statCard(c[0],c[1],c[2],c[3])).join('')
+   + `<div class="col-12"><div class="scard"><div class="slabel">Profit</div><div class="sval ${f.profit>=0?'text-success':'text-danger'}">${money(f.profit)}</div></div></div>`;
+}
+
+/* ===== EGGS ===== */
+async function loadEggsPage(){
+  PENS=await api('/api/pens');
+  $('eg-pen').innerHTML=PENS.map(p=>`<option value="${p.id}">${esc(p.name)}${p.batch_label?' — '+esc(p.batch_label):''}</option>`).join('') || '<option value="">Add a pen first</option>';
+  $('pen-tbl').innerHTML=PENS.map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(p.batch_label||'-')}</td><td><button class="btn btn-sm btn-outline-danger" onclick="delPen(${p.id})"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('') || '<tr><td colspan="3" class="text-muted">No pens yet</td></tr>';
+  fillBatchSelects();
+  const stock=await api('/api/eggs/stock');
+  $('egg-stat-cards').innerHTML=[
+    ['egg','ig','Crates in Stock',stock.crates_in_stock],
+    ['boxes-stacked','ib','Total Collected',stock.crates_collected],
+    ['cart-shopping','io','Total Sold',stock.crates_sold],
+    ['ban','ir','Cracked (lifetime)',stock.cracked_eggs_total],
+  ].map(c=>statCard(c[0],c[1],c[2],c[3])).join('');
+  loadEggLogs();
+}
+async function saveEggLog(){
+  const penId=$('eg-pen').value; if(!penId){alert('Add a pen first');return;}
+  const r=await api('/api/egg-logs','POST',{pen_id:penId,log_date:$('eg-date').value,crates_collected:$('eg-crates').value||0,cracked_eggs:$('eg-cracked').value||0,cracked_remarks:$('eg-crkrem').value});
+  if(r.success){ $('eg-crates').value='';$('eg-cracked').value=0;$('eg-crkrem').value=''; loadEggsPage(); } else alert(r.error||'Error');
+}
+async function loadEggLogs(){
+  const logs=await api('/api/egg-logs');
+  $('egg-tbl').innerHTML=logs.map(l=>`<tr><td>${l.log_date}</td><td>${esc(l.pen_name)}</td><td>${l.crates_collected}</td><td>${l.cracked_eggs}</td><td>${esc(l.cracked_remarks)}</td></tr>`).join('') || '<tr><td colspan="5" class="text-muted">No egg logs yet</td></tr>';
+}
+async function savePen(){
+  const name=$('pen-name').value.trim(); if(!name){alert('Pen name required');return;}
+  const r=await api('/api/pens','POST',{name, batch_id:$('pen-batch').value||null});
+  if(r.success){ $('pen-name').value=''; loadEggsPage(); } else alert(r.error||'Error');
+}
+async function delPen(id){ if(!confirm('Remove this pen?'))return; await api('/api/pens/'+id,'DELETE'); loadEggsPage(); }
+
+/* ===== SALES ===== */
+async function loadSalesPage(){
+  await reloadBatchCache();
+  loadChickenSales(); loadEggSales();
+}
+async function saveChickenSale(){
+  const batch_id=$('cs-batch').value; if(!batch_id){alert('Select a batch');return;}
+  const r=await api('/api/sales/chickens','POST',{
+    batch_id, sale_date:$('cs-date').value, quantity:$('cs-qty').value||0, price_per_bird:$('cs-price').value||0,
+    buyer_name:$('cs-buyer').value, buyer_phone:$('cs-phone').value, notes:$('cs-notes').value
+  });
+  if(r.success){ $('cs-qty').value='';$('cs-price').value='';$('cs-buyer').value='';$('cs-phone').value='';$('cs-notes').value=''; loadChickenSales(); reloadBatchCache(); }
+  else alert(r.error||'Error');
+}
+async function loadChickenSales(){
+  const s=await api('/api/sales/chickens');
+  $('cs-tbl').innerHTML=s.map(x=>`<tr><td>${x.receipt_no}</td><td>${x.sale_date}</td><td>${esc(x.batch_label)}</td><td>${esc(x.buyer_name)}</td><td>${x.quantity}</td><td>${money(x.price_per_bird)}</td><td><b>${money(x.total_amount)}</b></td></tr>`).join('') || '<tr><td colspan="7" class="text-muted">No sales yet</td></tr>';
+}
+async function saveEggSale(){
+  const r=await api('/api/sales/eggs','POST',{
+    batch_id:$('es-batch').value||null, sale_date:$('es-date').value, crates_sold:$('es-crates').value||0, price_per_crate:$('es-price').value||0,
+    buyer_name:$('es-buyer').value, buyer_phone:$('es-phone').value, notes:$('es-notes').value
+  });
+  if(r.success){ $('es-crates').value='';$('es-price').value='';$('es-buyer').value='';$('es-phone').value='';$('es-notes').value=''; loadEggSales(); }
+  else alert(r.error||'Error');
+}
+async function loadEggSales(){
+  const s=await api('/api/sales/eggs');
+  $('es-tbl').innerHTML=s.map(x=>`<tr><td>${x.receipt_no}</td><td>${x.sale_date}</td><td>${esc(x.batch_label)}</td><td>${esc(x.buyer_name)}</td><td>${x.crates_sold}</td><td>${money(x.price_per_crate)}</td><td><b>${money(x.total_amount)}</b></td></tr>`).join('') || '<tr><td colspan="7" class="text-muted">No sales yet</td></tr>';
+}
+
+/* ===== FEED STORE ===== */
+async function loadFeedStore(){
+  const s=await api('/api/feed/stock');
+  $('fs-cards').innerHTML=[
+    statCard('sack-xmark','iy','Balance (bags)',s.balance_bags),
+    statCard('coins','ig','Avg Cost/Bag',money(s.avg_cost_per_bag)),
+    statCard('money-bill-wave','ir','Total Spent on Feed',money(s.total_in_cost)),
+    statCard('hourglass-half','ib','Est. Days Remaining',s.days_remaining!==null?s.days_remaining:'-',s.days_remaining!==null?`~${s.avg_daily_consumption} bags/day used`:'Not enough usage history yet'),
+  ].join('');
+  const txns=await api('/api/feed');
+  $('fs-tbl').innerHTML=txns.map(t=>`<tr><td>${t.txn_date}</td><td><span class="b ${t.txn_type==='IN'?'b-green':'b-amber'}">${t.txn_type}</span></td><td>${t.bags}</td><td>${t.txn_type==='IN'?money(t.cost_per_bag):'-'}</td><td>${t.txn_type==='IN'?money(t.total_cost):'-'}</td><td>${esc(t.notes)}</td></tr>`).join('') || '<tr><td colspan="6" class="text-muted">No feed records yet</td></tr>';
+}
+async function saveFeedIn(){
+  const bags=$('fi-bags').value; if(!bags){alert('Bags bought required');return;}
+  const transport=parseFloat($('fi-transport').value||0);
+  const notes=$('fi-notes').value;
+  const r=await api('/api/feed','POST',{txn_type:'IN', txn_date:$('fi-date').value, bags, total_cost:$('fi-total').value||0, notes});
+  if(!r.success){ alert(r.error||'Error'); return; }
+  if(transport>0){
+    await api('/api/expenses','POST',{exp_date:$('fi-date').value, category:'Transport', description:'Feed transport'+(notes?' - '+notes:''), amount:transport});
+  }
+  $('fi-bags').value='';$('fi-total').value='';$('fi-transport').value='';$('fi-notes').value='';
+  loadFeedStore();
+}
+
+/* ===== SUPPLIES (charcoal, sawdust, etc.) ===== */
+async function loadSuppliesPage(){
+  const items=await api('/api/supply-items');
+  $('sp-cards').innerHTML=items.map(i=>{
+    const low=i.balance_bags<=i.low_stock_threshold;
+    return `<div class="col-6 col-md-4 col-lg-3"><div class="scard"><div class="sicon ${low?'ir':'ig'}"><i class="fa-solid fa-boxes-stacked"></i></div>
+      <div class="slabel">${esc(i.name)}</div><div class="sval">${i.balance_bags} bags</div><div class="ssub">${money(i.avg_cost_per_bag)}/bag${low?' · LOW STOCK':''}</div></div></div>`;
+  }).join('') || '<div class="col-12 text-muted">No supply items yet. Add one below.</div>';
+  const sel=$('sp-item');
+  const prevVal=sel.value;
+  sel.innerHTML=items.map(i=>`<option value="${i.id}">${esc(i.name)}</option>`).join('') || '<option value="">Add an item first</option>';
+  if(prevVal && items.some(i=>String(i.id)===prevVal)) sel.value=prevVal;
+  loadSupplyTxns();
+}
+async function addSupplyItem(){
+  const name=$('sp-name').value.trim(); if(!name){alert('Item name required');return;}
+  const r=await api('/api/supply-items','POST',{name, low_stock_threshold:$('sp-thresh').value||5});
+  if(r.success){ $('sp-name').value=''; loadSuppliesPage(); } else alert(r.error||'Error');
+}
+async function loadSupplyTxns(){
+  const iid=$('sp-item').value;
+  if(!iid){ $('sp-tbl').innerHTML='<tr><td colspan="5" class="text-muted">No item selected</td></tr>'; return; }
+  const txns=await api(`/api/supply-items/${iid}/transactions`);
+  $('sp-tbl').innerHTML=txns.map(t=>`<tr><td>${t.txn_date}</td><td><span class="b ${t.txn_type==='IN'?'b-green':'b-amber'}">${t.txn_type}</span></td><td>${t.quantity}</td><td>${t.txn_type==='IN'?money(t.total_cost):'-'}</td><td>${esc(t.notes)}</td></tr>`).join('') || '<tr><td colspan="5" class="text-muted">No records yet</td></tr>';
+}
+async function saveSupplyTxn(type){
+  const iid=$('sp-item').value; if(!iid){alert('Add a supply item first');return;}
+  const qty=$('sp-qty').value; if(!qty){alert('Bags required');return;}
+  const body={txn_type:type, txn_date:$('sp-date').value, quantity:qty, notes:$('sp-notes').value};
+  if(type==='IN') body.total_cost=$('sp-cost').value||0;
+  const r=await api(`/api/supply-items/${iid}/transactions`,'POST',body);
+  if(r.success){ $('sp-qty').value='';$('sp-cost').value='';$('sp-notes').value=''; loadSuppliesPage(); } else alert(r.error||'Error');
+}
+
+/* ===== TOOLS ===== */
+async function loadToolsPage(){
+  const cats=await api('/api/tool-categories');
+  $('tc-tbl').innerHTML=cats.map(c=>`<tr><td>${esc(c.name)}</td><td>${c.tool_count}</td></tr>`).join('') || '<tr><td colspan="2" class="text-muted">No categories yet</td></tr>';
+  $('tl-cat').innerHTML=cats.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('') || '<option value="">Add a category first</option>';
+  loadTools();
+}
+async function addToolCat(){
+  const name=$('tc-name').value.trim(); if(!name){alert('Category name required');return;}
+  const r=await api('/api/tool-categories','POST',{name});
+  if(r.success){ $('tc-name').value=''; loadToolsPage(); } else alert(r.error||'Error');
+}
+async function saveTool(){
+  const catId=$('tl-cat').value; if(!catId){alert('Add a category first');return;}
+  const name=$('tl-name').value.trim(); if(!name){alert('Tool name required');return;}
+  const r=await api('/api/tools','POST',{category_id:catId,name,quantity:$('tl-qty').value||1,unit_cost:$('tl-cost').value||0});
+  if(r.success){ $('tl-name').value='';$('tl-qty').value=1;$('tl-cost').value=''; loadTools(); } else alert(r.error||'Error');
+}
+async function loadTools(){
+  const tools=await api('/api/tools');
+  $('tl-tbl').innerHTML=tools.map(t=>`<tr><td>${t.date_bought}</td><td>${esc(t.category_name)}</td><td>${esc(t.name)}</td><td>${t.quantity}</td><td>${money(t.unit_cost)}</td><td>${money(t.total_cost)}</td></tr>`).join('') || '<tr><td colspan="6" class="text-muted">No tools recorded yet</td></tr>';
+}
+
+/* ===== EXPENSES ===== */
+async function saveExpense(){
+  const amt=$('ex-amt').value; if(!amt){alert('Amount required');return;}
+  const cat=$('ex-cat').value, desc=$('ex-desc').value.trim();
+  if(cat==='Other' && !desc){alert('Please describe what this "Other" expense is');$('ex-desc').focus();return;}
+  const r=await api('/api/expenses','POST',{exp_date:$('ex-date').value,category:cat,description:desc,amount:amt});
+  if(r.success){ $('ex-desc').value='';$('ex-amt').value=''; loadExpenses(); } else alert(r.error||'Error');
+}
+async function loadExpenses(){
+  const es=await api('/api/expenses');
+  $('ex-tbl').innerHTML=es.map(e=>`<tr><td>${e.exp_date}</td><td><span class="b b-gray">${e.category}</span></td><td>${esc(e.description)}</td><td>${money(e.amount)}</td></tr>`).join('') || '<tr><td colspan="4" class="text-muted">No expenses recorded yet</td></tr>';
+}
+
+/* ===== FINANCE / PREDICTIVE PRICING ===== */
+async function loadFinancePage(){
+  await reloadBatchCache();
+  const s=await api('/api/finance/summary');
+  $('fin-cards').innerHTML=[
+    ['coins','ir','Total Cost',money(s.total_cost)],
+    ['hand-holding-dollar','ig','Total Revenue',money(s.total_revenue)],
+    ['chart-line','ib','Total Profit',money(s.total_profit)],
+    ['toolbox','iy','Tools Spend',money(s.tools_cost)],
+    ['receipt','ip','Other Expenses',money(s.expenses_total)],
+  ].map(c=>statCard(c[0],c[1],c[2],c[3])).join('');
+  $('fin-tbl').innerHTML=(s.per_batch||[]).map(p=>`<tr><td>${esc(p.batch_label)}</td><td>${money(p.total_cost)}</td><td>${money(p.total_revenue)}</td><td class="${p.profit>=0?'text-success':'text-danger'}"><b>${money(p.profit)}</b></td></tr>`).join('') || '<tr><td colspan="4" class="text-muted">No batches yet</td></tr>';
+  loadFinanceBreakdown();
+}
+async function loadFinanceBreakdown(){
+  const b=await api('/api/finance/breakdown');
+  $('fb-tbl').innerHTML=(b.categories||[]).map(c=>{
+    const pct=b.total?Math.round(c.amount/b.total*100):0;
+    return `<tr><td>${esc(c.category)}</td><td>${money(c.amount)}</td><td>${pct}%</td></tr>`;
+  }).join('') || '<tr><td colspan="3" class="text-muted">No spending recorded yet</td></tr>';
+}
+async function calcPrice(){
+  const batch_id=$('pp-batch').value; if(!batch_id){alert('Select a batch');return;}
+  const r=await api('/api/finance/predict-price','POST',{
+    batch_id, sell_type:$('pp-type').value, target_profit_pct:$('pp-pct').value||0, quantity:$('pp-qty').value||null
+  });
+  if(!r.success){ $('pp-result').innerHTML=`<div class="alertbox al-danger">${esc(r.error)}</div>`; return; }
+  $('pp-result').innerHTML=`
+    <div class="row g-2">
+      <div class="col-6 col-md-3"><div class="scard"><div class="slabel">Total Cost So Far</div><div class="sval">${money(r.total_cost)}</div></div></div>
+      <div class="col-6 col-md-3"><div class="scard"><div class="slabel">Already Realized</div><div class="sval">${money(r.already_realized_revenue)}</div></div></div>
+      <div class="col-6 col-md-3"><div class="scard"><div class="slabel">Target Revenue (${r.target_profit_pct}% profit)</div><div class="sval">${money(r.target_total_revenue)}</div></div></div>
+      <div class="col-6 col-md-3"><div class="scard" style="border-color:#86efac;background:var(--prl)"><div class="slabel">Sell At (${r.unit_label})</div><div class="sval" style="color:var(--prd)">${money(r.price_per_unit)}</div><div class="ssub">for ${r.quantity_used} unit(s)</div></div></div>
+    </div>`;
+}
+
+/* ===== STAFF ===== */
+async function saveStaff(){
+  const full_name=$('sf-name').value.trim(), username=$('sf-user').value.trim();
+  if(!full_name||!username){alert('Name and username required');return;}
+  const r=await api('/api/staff','POST',{full_name,username,phone:$('sf-phone').value,password:$('sf-pass').value,role:$('sf-role').value});
+  if(r.success){ $('sf-name').value='';$('sf-user').value='';$('sf-phone').value='';$('sf-pass').value=''; loadStaff(); }
+  else alert(r.error||'Error');
+}
+async function loadStaff(){
+  const users=await api('/api/staff');
+  $('sf-tbl').innerHTML=users.map(u=>`<tr>
+    <td>${esc(u.full_name)}</td><td>${esc(u.username)}</td><td class="text-capitalize">${u.role}</td><td>${esc(u.phone)}</td>
+    <td><span class="b ${u.active?'b-green':'b-red'}">${u.active?'Active':'Inactive'}</span></td>
+    <td><button class="btn btn-sm btn-outline-secondary" onclick="togStaff(${u.id},${!u.active})">${u.active?'Deactivate':'Activate'}</button></td>
+    </tr>`).join('') || '<tr><td colspan="6" class="text-muted">No staff yet</td></tr>';
+}
+async function togStaff(id,active){ await api('/api/staff/'+id,'PUT',{active}); loadStaff(); }
+
+/* ===== SETTINGS ===== */
+async function loadSettings(){
+  const s=await api('/api/settings');
+  $('st-farmname').value=s.farm_name; $('st-feedthresh').value=s.low_feed_threshold_bags; $('st-mortthresh').value=s.high_mortality_pct_alert;
+}
+async function saveSettings(){
+  const r=await api('/api/settings','POST',{farm_name:$('st-farmname').value,low_feed_threshold_bags:$('st-feedthresh').value,high_mortality_pct_alert:$('st-mortthresh').value});
+  if(r.success){ $('sb-farmname').textContent=$('st-farmname').value; alert('Settings saved'); } else alert(r.error||'Error');
+}
+
+/* ===== PROFILE ===== */
+async function loadProfile(){
+  const u=await api('/api/me');
+  $('pf-name').value=u.full_name; $('pf-user').value=u.username; $('pf-phone').value=u.phone;
+  $('pf-curpw').value=''; $('pf-newpw').value='';
+}
+async function saveProfile(){
+  const body={full_name:$('pf-name').value,username:$('pf-user').value,phone:$('pf-phone').value};
+  if($('pf-newpw').value){ body.new_password=$('pf-newpw').value; body.current_password=$('pf-curpw').value; }
+  const r=await api('/api/me/update','POST',body);
+  if(r.success){ alert('Profile updated'); ME=await api('/api/me'); $('foot-name').textContent=ME.full_name; } else alert(r.error||'Error');
+}
+
+/* ===== STARTUP ===== */
+(async function(){
+  const me=await api('/api/me');
+  if(me && me.id){ initApp(); }
+})();
+</script>
+</body>
+</html>
