@@ -1,6 +1,6 @@
 from datetime import datetime, date, timedelta
 from flask import Blueprint, request, jsonify, session
-from app.models import db, Batch, DailyLog, FeedTransaction, BodyWeight, Medication, Vaccination
+from app.models import db, Batch, DailyLog, FeedTransaction, BodyWeight, Medication, Vaccination, EggLog, ChickenSale, EggSale
 from app.auth import login_required, role_required
 
 flock_bp = Blueprint('flock', __name__)
@@ -224,3 +224,27 @@ def api_vaccinations(bid):
         return jsonify({'success': True, 'id': v.id})
     vs = Vaccination.query.filter_by(batch_id=bid).order_by(Vaccination.vac_date.desc()).limit(60).all()
     return jsonify([v.to_dict() for v in vs])
+
+
+# ─── DAILY RECORD (everything logged for one batch on one date) ──
+
+@flock_bp.route('/api/batches/<int:bid>/daily-record')
+@login_required
+def api_batch_daily_record(bid):
+    Batch.query.get_or_404(bid)
+    rec_date = parse_date(request.args.get('date'))
+
+    daily_log = DailyLog.query.filter_by(batch_id=bid, log_date=rec_date).first()
+    data = {
+        'date': rec_date.isoformat(),
+        'daily_log': daily_log.to_dict() if daily_log else None,
+        'feed': [t.to_dict() for t in FeedTransaction.query.filter_by(batch_id=bid, txn_date=rec_date).all()],
+        'weights': [w.to_dict() for w in BodyWeight.query.filter_by(batch_id=bid, weigh_date=rec_date).all()],
+        'medications': [m.to_dict() for m in Medication.query.filter_by(batch_id=bid, med_date=rec_date).all()],
+        'vaccinations': [v.to_dict() for v in Vaccination.query.filter_by(batch_id=bid, vac_date=rec_date).all()],
+        'egg_logs': [e.to_dict() for e in EggLog.query.filter_by(batch_id=bid, log_date=rec_date).all()],
+    }
+    if session.get('role') in ('admin', 'super_admin'):
+        data['chicken_sales'] = [s.to_dict() for s in ChickenSale.query.filter_by(batch_id=bid, sale_date=rec_date).all()]
+        data['egg_sales'] = [s.to_dict() for s in EggSale.query.filter_by(batch_id=bid, sale_date=rec_date).all()]
+    return jsonify(data)

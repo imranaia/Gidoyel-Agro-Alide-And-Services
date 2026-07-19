@@ -170,6 +170,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f1f5f9;color:#1e293
   <div class="nav-it on" data-pg="dash"><i class="fa-solid fa-gauge"></i> Dashboard</div>
   <div class="nav-sec">Flock</div>
   <div class="nav-it" data-pg="batches"><i class="fa-solid fa-kiwi-bird"></i> Batches</div>
+  <div class="nav-it" data-pg="dailyrecord"><i class="fa-solid fa-calendar-day"></i> Daily Record</div>
   <div class="nav-it" data-pg="feedstore"><i class="fa-solid fa-sack-xmark"></i> Feed Store</div>
   <div class="nav-it" data-pg="supplies"><i class="fa-solid fa-boxes-stacked"></i> Supplies</div>
   <div class="nav-it" data-pg="eggs"><i class="fa-solid fa-egg"></i> Eggs</div>
@@ -228,6 +229,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f1f5f9;color:#1e293
         <button class="btn btn-pr btn-sm role-admin" onclick="openBatchMdl()"><i class="fa-solid fa-plus me-1"></i>New Batch</button>
       </div>
       <div class="row g-2" id="batch-grid"></div>
+    </div>
+
+    <!-- DAILY RECORD -->
+    <div class="page" id="page-dailyrecord">
+      <div class="card mb-3"><div class="card-header">Daily Record</div><div class="p-3">
+        <div class="row g-2">
+          <div class="col-6 col-md-4"><label class="form-label">Batch</label><select id="dr-batch" class="form-select"></select></div>
+          <div class="col-6 col-md-3"><label class="form-label">Date</label><input type="date" id="dr-date" class="form-control"></div>
+          <div class="col-12 col-md-2 d-flex align-items-end"><button class="btn btn-pr w-100" onclick="loadDailyRecord()">View</button></div>
+        </div>
+      </div></div>
+      <div id="dr-result"></div>
     </div>
 
     <!-- BATCH DETAIL -->
@@ -620,8 +633,10 @@ async function initApp(){
   document.querySelectorAll('#bd-tabs button').forEach(b=>b.onclick=()=>showSub('bd-tabs','bdt-',b));
   document.querySelectorAll('#page-eggs .tab-pill button').forEach(b=>b.onclick=()=>showSub(b.parentElement,'et-',b));
   document.querySelectorAll('#page-sales .tab-pill button').forEach(b=>b.onclick=()=>showSub(b.parentElement,'st-',b));
-  ['dl-date','fo-date','fi-date','sp-date','bw-date','md-date','vc-date','eg-date','cs-date','es-date','ex-date','bt-date'].forEach(id=>{if($(id))$(id).value=todayStr();});
+  ['dl-date','fo-date','fi-date','sp-date','bw-date','md-date','vc-date','eg-date','cs-date','es-date','ex-date','bt-date','dr-date'].forEach(id=>{if($(id))$(id).value=todayStr();});
   if($('sp-item')) $('sp-item').onchange=loadSupplyTxns;
+  if($('dr-batch')) $('dr-batch').onchange=loadDailyRecord;
+  if($('dr-date')) $('dr-date').onchange=loadDailyRecord;
   await loadDash();
   await reloadBatchCache();
 }
@@ -635,6 +650,7 @@ function showPage(id){
   toggleSidebar(false);
   if(id==='dash') loadDash();
   if(id==='batches') loadBatches();
+  if(id==='dailyrecord') loadDailyRecordPage();
   if(id==='feedstore') loadFeedStore();
   if(id==='supplies') loadSuppliesPage();
   if(id==='eggs') loadEggsPage();
@@ -705,7 +721,7 @@ async function reloadBatchCache(){
 }
 function fillBatchSelects(){
   const opts=BATCHES.map(b=>`<option value="${b.id}">${esc(b.label)} (${b.quantity_current} left)</option>`).join('');
-  ['cs-batch','pp-batch'].forEach(id=>{ if($(id)) $(id).innerHTML=opts; });
+  ['cs-batch','pp-batch','dr-batch'].forEach(id=>{ if($(id)) $(id).innerHTML=opts; });
   if($('es-batch')) $('es-batch').innerHTML='<option value="">Mixed / Unassigned</option>'+opts;
   if($('pen-batch')) $('pen-batch').innerHTML='<option value="">-- none --</option>'+opts;
 }
@@ -722,6 +738,33 @@ async function loadBatches(){
         <div><div class="pm-lbl">Cost/bird</div><div class="pm-val">${money(b.cost_per_bird)}</div></div>
       </div>
     </div></div>`).join('') || '<div class="col-12 text-muted">No batches yet. Click "New Batch" to add your first flock.</div>';
+}
+async function loadDailyRecordPage(){
+  await reloadBatchCache();
+  if(!$('dr-date').value) $('dr-date').value=todayStr();
+  if(BATCHES.length) loadDailyRecord();
+  else $('dr-result').innerHTML='<div class="text-muted">No batches yet. Create one under Batches first.</div>';
+}
+async function loadDailyRecord(){
+  const bid=$('dr-batch').value;
+  if(!bid){ $('dr-result').innerHTML='<div class="text-muted">Add a batch first.</div>'; return; }
+  const dateVal=$('dr-date').value||todayStr();
+  const r=await api(`/api/batches/${bid}/daily-record?date=${dateVal}`);
+  const dl=r.daily_log;
+  const rows=[
+    ['Daily Log', dl ? `Mortality ${dl.mortality} &middot; Water ${dl.water_liters}L${dl.remarks?' &middot; '+esc(dl.remarks):''}` : null],
+    ['Feed', (r.feed||[]).length ? r.feed.map(t=>`${t.txn_type==='IN'?'Bought':'Used'} ${t.bags} bags${t.txn_type==='IN'?' ('+money(t.total_cost)+')':''}`).join('<br>') : null],
+    ['Body Weight', (r.weights||[]).length ? r.weights.map(w=>`${esc(w.size_category)}: ${w.avg_weight_kg}kg (${w.sample_count} sampled)`).join('<br>') : null],
+    ['Medication', (r.medications||[]).length ? r.medications.map(m=>`${esc(m.name)} ${esc(m.dosage)} (${money(m.cost)})`).join('<br>') : null],
+    ['Vaccination', (r.vaccinations||[]).length ? r.vaccinations.map(v=>`${esc(v.name)} (${money(v.cost)})`).join('<br>') : null],
+    ['Eggs Collected', (r.egg_logs||[]).length ? r.egg_logs.map(e=>`${esc(e.pen_name)}: ${e.crates_collected} crates${e.cracked_eggs?', '+e.cracked_eggs+' cracked':''}`).join('<br>') : null],
+  ];
+  if(r.chicken_sales) rows.push(['Chicken Sales', r.chicken_sales.length ? r.chicken_sales.map(s=>`${s.quantity} birds to ${esc(s.buyer_name)||'-'} (${money(s.total_amount)})`).join('<br>') : null]);
+  if(r.egg_sales) rows.push(['Egg Sales', r.egg_sales.length ? r.egg_sales.map(s=>`${s.crates_sold} crates to ${esc(s.buyer_name)||'-'} (${money(s.total_amount)})`).join('<br>') : null]);
+  const batchLabel=$('dr-batch').selectedOptions[0]?$('dr-batch').selectedOptions[0].textContent:'';
+  $('dr-result').innerHTML=`<div class="card"><div class="card-header">${esc(batchLabel)} &mdash; ${r.date}</div>
+    <div class="tw"><table class="tbl w-100"><tbody>${rows.map(([label,val])=>`<tr><td style="width:160px"><b>${label}</b></td><td>${val || '<span class="text-muted">No record</span>'}</td></tr>`).join('')}</tbody></table></div>
+  </div>`;
 }
 function openBatchMdl(){
   $('bt-label').value='';$('bt-date').value=todayStr();$('bt-qord').value='';$('bt-qrec').value='';$('bt-paid').value='';$('bt-notes').value='';$('bt-pol').checked=false;
